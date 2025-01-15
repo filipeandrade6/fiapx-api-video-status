@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-videos-deploy
+spec:
+  selector:
+    matchLabels:
+      app: fiapx-videos
+  template:
+    metadata:
+      labels:
+        app: fiapx-videos
+    spec:
+      containers:
+        - name: fiapx-videos
+          image: DOCKER_IMAGE
+          ports:
+            - containerPort: 8080
+          envFrom:
+            - configMapRef:
+                name: app-videos-cm
+          resources:
+            requests:
+              cpu: 200m

@@ -1,0 +1,144 @@
+openapi: 3.0.3
+info:
+  title: FiapX API Video Staus
+  description: API de gerenciamento de registros de video.
+  contact:
+    name: Suporte FiapX API
+    url: http://fiapx-api.com/suporte
+    email: contato@fiapx-api.com
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+tags:
+  - name: Video
+    description: Operações relacionadas a video
+paths:
+  /videos:
+    # get:
+    #   tags:
+    #     - Item
+    #   summary: Buscar itens
+    #   description: Busca itens por categoria
+    #   parameters:
+    #     - name: categoria
+    #       in: query
+    #       description: Categoria do item
+    #       schema:
+    #         $ref: '#/components/schemas/Categoria'
+    #   responses:
+    #     '200':
+    #       description: Sucesso
+    #       content:
+    #         application/json:
+    #           schema:
+    #             $ref: '#/components/schemas/Item'
+    #     '404':
+    #       description: Itens não encontrados
+    #       content:
+    #         application/json:
+    #           schema:
+    #             type: string
+    #             example: Itens não encontrados
+  /videos/{id}:
+    get:
+      tags:
+        - Video
+      summary: Buscar video por ID
+      description: Busca um video pelo ID
+      parameters:
+        - name: id
+          in: path
+          description: ID do video
+          required: true
+          schema:
+            $ref: '#/components/schemas/UUID'
+          example: 257ae14b-8bb7-4a80-9a68-22197f72ff47
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Video'
+        '404':
+          description: Video não encontrado
+          content:
+            application/json:
+              schema:
+                type: string
+                example: Video não encontrado
+components:
+  schemas:
+    Status:
+      enum:
+        - EM_PROCESSAMENTO,
+        - FINALIZADO,
+        - DISPONIVEL,
+        - CANCELADO
+      type: string
+    # ClienteDto:
+    #   required:
+    #     - nome
+    #     - cpf
+    #     - email
+    #     - ativo
+    #   type: object
+    #   properties:
+    #     nome:
+    #       type: string
+    #       example: Gabriel Medina
+    #     cpf:
+    #       type: string
+    #       example: '98798798798'
+    #     email:
+    #       type: string
+    #       example: gabrielmedina@surf.com
+    #     ativo:
+    #       type: boolean
+    #       example: true
+    Instant:
+      format: date-time
+      type: string
+      example: 2022-03-10T16:15:50.000Z
+    Video:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/UUID'
+        status:
+          $ref: '#/components/schemas/Status'
+        idUsuario:
+          $ref: '#/components/schemas/UUID'
+    # ItemCreateUpdateDto:
+    #   required:
+    #     - nome
+    #     - preco
+    #     - categoria
+    #     - descricao
+    #     - imagem
+    #   type: object
+    #   properties:
+    #     nome:
+    #       type: string
+    #       example: '1'
+    #     preco:
+    #       format: int32
+    #       type: integer
+    #       example: 1
+    #     categoria:
+    #       type: string
+    #       allOf:
+    #         - $ref: '#/components/schemas/Categoria'
+    #       example: '1'
+    #     descricao:
+    #       type: string
+    #       example: '1'
+    #     imagem:
+    #       type: string
+    #       example: '1'
+    UUID:
+      format: uuid
+      pattern: >-
+        [a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}
+      type: string

@@ -1,0 +1,44 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: app-ingress
+spec:
+  ingressClassName: nginx
+  rules:
+  - http:
+      paths:
+      - path: /swagger-ui
+        pathType: Prefix
+        backend:
+          service:
+            name: app-pedidos-svc
+            port:
+              number: 8080
+      - path: /itens
+        pathType: Prefix
+        backend:
+          service:
+            name: app-pedidos-svc
+            port:
+              number: 8080
+      - path: /pedidos
+        pathType: Prefix
+        backend:
+          service:
+            name: app-pedidos-svc
+            port:
+              number: 8080
+      - path: /v1/clientes
+        pathType: Prefix
+        backend:
+          service:
+            name: app-clientes-svc
+            port:
+              number: 8081
+      - path: /api/pagamento
+        pathType: Prefix
+        backend:
+          service:
+            name: app-pagamentos-svc
+            port:
+              number: 8080
