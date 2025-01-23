@@ -1,4 +1,4 @@
-package org.jfm.controller.filters;
+package org.jfm.controller.rest.filters;
 
 import org.jboss.resteasy.reactive.server.ServerExceptionMapper;
 import org.jfm.domain.exceptions.EntityNotFoundException;

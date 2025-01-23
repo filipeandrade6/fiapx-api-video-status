@@ -1,5 +1,6 @@
-package org.jfm.controller;
+package org.jfm.controller.rest;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.eclipse.microprofile.openapi.annotations.Operation;
@@ -53,6 +54,25 @@ public class VideoResource {
 
     Video video = useCase.buscarPorId(id);
     return Response.status(Response.Status.OK).entity(video).build();
+  }
+
+  @Operation(summary = "Buscar lista de videos por ID de usuário", description = "Busca lista de videos por ID de usuário")
+  @APIResponses(value = {
+    @APIResponse(responseCode = "200", description = "Sucesso", content = {
+      @Content(mediaType = "application/json", schema = @Schema(implementation = Video.class))
+    }),
+    @APIResponse(responseCode = "404", description = "Video não encontrado", content = {
+      @Content(mediaType = "application/json", schema = @Schema(type = SchemaType.STRING, example = "Video não encontrado"))
+    })
+  })
+  @GET
+  @Path("/usuario/{idUsuario}")
+  public Response buscarPorIdUsuario(
+    @PathParam("idUsuario") @Parameter(description = "ID do usuário", example = "TODO")
+    UUID idUsuario) {
+    
+    List<Video> videos = useCase.buscarPorIdUsuario(idUsuario);
+    return Response.status(Response.Status.OK).entity(videos).build();
   }
 
 }

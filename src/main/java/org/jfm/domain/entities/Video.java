@@ -1,12 +1,16 @@
 package org.jfm.domain.entities;
 
+import java.util.Date;
 import java.util.UUID;
 
 import org.jfm.domain.entities.enums.Status;
 
 public class Video {
+
   private UUID id;
   private Status status;
+  private Date dataCriacao;
+  private Date dataAtualizacao;
   private UUID idUsuario;
 
   public Video() {
@@ -32,6 +36,22 @@ public class Video {
 
   public void setStatus(Status status) {
     this.status = status;
+  }
+
+  public Date getDataCriacao() {
+    return dataCriacao;
+  }
+
+  public void setDataCriacao(Date dataCriacao) {
+    this.dataCriacao = dataCriacao;
+  }
+
+  public Date getDataAtualizacao() {
+    return dataAtualizacao;
+  }
+
+  public void setDataAtualizacao(Date dataAtualizacao) {
+    this.dataAtualizacao = dataAtualizacao;
   }
 
   public UUID getIdUsuario() {

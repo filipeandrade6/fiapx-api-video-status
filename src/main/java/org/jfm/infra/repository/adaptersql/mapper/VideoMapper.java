@@ -8,4 +8,6 @@ import org.mapstruct.Mapper;
 @Mapper(config = QuarkusMappingConfig.class)
 public interface VideoMapper {
   Video toDomain(VideoEntity video);
+
+  VideoEntity toEntity(Video video);
 }
