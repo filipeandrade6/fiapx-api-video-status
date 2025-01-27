@@ -15,7 +15,7 @@ import jakarta.persistence.Table;
 @Table(name = "videos")
 @NamedQueries({
   @NamedQuery(name = "Video.findById", query = "SELECT v FROM VideoEntity v WHERE v.id = :id"),
-  @NamedQuery(name = "Video.findByUsuario", query = "SELECT v FROM VideoEntity v WHERE v.idUsuario =: idUsuario"),
+  @NamedQuery(name = "Video.findByUsuario", query = "SELECT v FROM VideoEntity v WHERE v.idUsuario = :idUsuario"),
   @NamedQuery(name = "Video.delete", query = "DELETE FROM VideoEntity v WHERE v.id = :id")
 })
 public class VideoEntity {

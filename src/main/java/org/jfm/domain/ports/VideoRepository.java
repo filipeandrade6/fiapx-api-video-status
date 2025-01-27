@@ -9,5 +9,5 @@ public interface VideoRepository {
   public void criar(Video video);
   public Video buscarPorId(UUID id);
   public List<Video> buscarPorUsuario(UUID id);
-  public void remover(UUID id);
+  public void remover(Video video);
 }

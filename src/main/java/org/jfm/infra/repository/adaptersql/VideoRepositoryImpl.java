@@ -25,10 +25,10 @@ import jakarta.transaction.Transactional;
 public class VideoRepositoryImpl implements VideoRepository {
 
   @Inject
-  VideoMapper mapper;
-
-  @Inject
   EntityManager entityManager;
+  
+  @Inject
+  VideoMapper mapper;
 
   @Override
   @Transactional
@@ -73,10 +73,10 @@ public class VideoRepositoryImpl implements VideoRepository {
 
   @Override
   @Transactional
-  public void remover(UUID id) {
+  public void remover(Video video) {
     try {
       Query query = entityManager.createNamedQuery("Video.delete");
-      query.setParameter("id", id);
+      query.setParameter("id", video.getId());
       query.executeUpdate();
     } catch (PersistenceException e) {
       throw new ErrorSqlException(ErrosSistemaEnum.DATABASE_ERROR.getMessage());

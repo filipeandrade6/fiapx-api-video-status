@@ -35,6 +35,7 @@ public class VideoService implements VideoUseCase {
 
   @Override
   public void remover(UUID id) {
-    repository.remover(id);
+    Video video = repository.buscarPorId(id);
+    repository.remover(video);
   }
 }

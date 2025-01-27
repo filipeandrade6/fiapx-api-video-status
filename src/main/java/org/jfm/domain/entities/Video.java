@@ -1,5 +1,6 @@
 package org.jfm.domain.entities;
 
+import java.time.Instant;
 import java.util.Date;
 import java.util.UUID;
 
@@ -9,17 +10,20 @@ public class Video {
 
   private UUID id;
   private Status status;
-  private Date dataCriacao;
-  private Date dataAtualizacao;
+  private Instant dataCriacao;
+  private Instant dataAtualizacao;
   private UUID idUsuario;
 
   public Video() {
     super();
   }
   
-  public Video(UUID id, Status status) {
+  public Video(UUID id, Status status, Instant dataCriacao, Instant dataAtualizacao, UUID idUsuario) {
     this.id = id;
     this.status = status;
+    this.dataCriacao = dataCriacao;
+    this.dataAtualizacao = dataAtualizacao;
+    this.idUsuario = idUsuario;
   }
 
   public UUID getId() {
@@ -38,19 +42,19 @@ public class Video {
     this.status = status;
   }
 
-  public Date getDataCriacao() {
+  public Instant getDataCriacao() {
     return dataCriacao;
   }
 
-  public void setDataCriacao(Date dataCriacao) {
+  public void setDataCriacao(Instant dataCriacao) {
     this.dataCriacao = dataCriacao;
   }
 
-  public Date getDataAtualizacao() {
+  public Instant getDataAtualizacao() {
     return dataAtualizacao;
   }
 
-  public void setDataAtualizacao(Date dataAtualizacao) {
+  public void setDataAtualizacao(Instant dataAtualizacao) {
     this.dataAtualizacao = dataAtualizacao;
   }
 

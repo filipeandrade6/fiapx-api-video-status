@@ -8,8 +8,10 @@ import jakarta.enterprise.inject.Produces;
 
 @ApplicationScoped
 public class AppContext {
+
   @Produces
   public VideoService VideoService(VideoRepository videoRepository) {
     return new VideoService(videoRepository);
   };
+
 }
