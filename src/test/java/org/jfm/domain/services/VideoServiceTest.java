@@ -59,7 +59,7 @@ public class VideoServiceTest {
   public void testBuscarPorIdUsuario() {
     List<Video> videos = VideoFactory.montarLista();
 
-    Assertions.assertEquals(service.buscarPorIdUsuario(UUID.fromString("dd494312-7c6c-40c0-8449-0574c715325d")), videos);
+    Assertions.assertEquals(service.buscarPorEmail("exemplo@exemplo.com"), videos);
   }
 
   @Test

@@ -11,34 +11,20 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: app-pedidos-svc
+            name: app-videos-svc
             port:
               number: 8080
-      - path: /itens
+      - path: /videos
         pathType: Prefix
         backend:
           service:
-            name: app-pedidos-svc
+            name: app-videos-svc
             port:
               number: 8080
-      - path: /pedidos
+      - path: /sync
         pathType: Prefix
         backend:
           service:
-            name: app-pedidos-svc
-            port:
-              number: 8080
-      - path: /v1/clientes
-        pathType: Prefix
-        backend:
-          service:
-            name: app-clientes-svc
-            port:
-              number: 8081
-      - path: /api/pagamento
-        pathType: Prefix
-        backend:
-          service:
-            name: app-pagamentos-svc
+            name: app-videos-svc
             port:
               number: 8080

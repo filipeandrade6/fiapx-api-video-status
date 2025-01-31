@@ -8,6 +8,7 @@ import org.jfm.domain.entities.Video;
 public interface VideoUseCase {
   public UUID criar(Video video);
   public Video buscarPorId(UUID id);
-  public List<Video> buscarPorIdUsuario(UUID idUsuario);
+  public List<Video> buscarPorEmail(String email);
+  public void editar(Video video);
   public void remover(UUID id);
 }

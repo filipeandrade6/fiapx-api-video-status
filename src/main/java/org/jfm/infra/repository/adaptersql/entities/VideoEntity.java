@@ -14,17 +14,27 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "videos")
 @NamedQueries({
-  @NamedQuery(name = "Video.findById", query = "SELECT v FROM VideoEntity v WHERE v.id = :id"),
-  @NamedQuery(name = "Video.findByUsuario", query = "SELECT v FROM VideoEntity v WHERE v.idUsuario = :idUsuario"),
-  @NamedQuery(name = "Video.delete", query = "DELETE FROM VideoEntity v WHERE v.id = :id")
+  @NamedQuery(
+    name = "Video.findById", 
+    query = "SELECT v FROM VideoEntity v WHERE v.id = :id"),
+  @NamedQuery(
+    name = "Video.findByEmail", 
+    query = "SELECT v FROM VideoEntity v WHERE v.email = :email"),
+  @NamedQuery(
+    name = "Video.delete", 
+    query = "UPDATE VideoEntity v SET v.status = :status, v.dataAtualizacao = :dataAtualizacao WHERE v.id = :id"),
+  @NamedQuery(
+    name = "Video.update", 
+    query = "DELETE FROM VideoEntity v WHERE v.id = :id")
 })
 public class VideoEntity {
+
   @Id
   private UUID id;
   private Status status;
   private Date dataCriacao;
   private Date dataAtualizacao;
-  private UUID idUsuario;
+  private UUID email;
 
   public UUID getId() {
     return id;
@@ -58,12 +68,20 @@ public class VideoEntity {
     this.dataAtualizacao = dataAtualizacao;
   }
 
-  public UUID getIdUsuario() {
-    return idUsuario;
-  }
+  // public UUID getIdUsuario() {
+  //   return idUsuario;
+  // }
 
-  public void setIdUsuario(UUID idUsuario) {
-    this.idUsuario = idUsuario;
-  }
+  // public void setIdUsuario(UUID idUsuario) {
+  //   this.idUsuario = idUsuario;
+  // }
+
+	public UUID getEmail() {
+		return email;
+	}
+
+	public void setEmail(UUID email) {
+		this.email = email;
+	} 
 
 }

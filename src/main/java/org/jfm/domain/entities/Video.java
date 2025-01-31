@@ -1,7 +1,6 @@
 package org.jfm.domain.entities;
 
 import java.time.Instant;
-import java.util.Date;
 import java.util.UUID;
 
 import org.jfm.domain.entities.enums.Status;
@@ -12,18 +11,25 @@ public class Video {
   private Status status;
   private Instant dataCriacao;
   private Instant dataAtualizacao;
-  private UUID idUsuario;
+  private String email;
 
   public Video() {
     super();
   }
   
-  public Video(UUID id, Status status, Instant dataCriacao, Instant dataAtualizacao, UUID idUsuario) {
+  public Video(UUID id, Status status, Instant dataCriacao, Instant dataAtualizacao, String email) {
     this.id = id;
     this.status = status;
     this.dataCriacao = dataCriacao;
     this.dataAtualizacao = dataAtualizacao;
-    this.idUsuario = idUsuario;
+  }
+
+  public Video(UUID id, Status status, String email) {
+    this.id = id;
+    this.status = status;
+    this.email = email;
+    this.dataCriacao = Instant.now();
+    this.dataAtualizacao = Instant.now();
   }
 
   public UUID getId() {
@@ -58,14 +64,14 @@ public class Video {
     this.dataAtualizacao = dataAtualizacao;
   }
 
-  public UUID getIdUsuario() {
-    return idUsuario;
+  public String getEmail() {
+    return email;
   }
 
-  public void setIdUsuario(UUID idUsuario) {
-    this.idUsuario = idUsuario;
+  public void setEmail(String email) {
+    this.email = email;
   }
-
+  
   @Override
   public int hashCode() {
     final int prime = 31;
@@ -90,4 +96,5 @@ public class Video {
       return false;
     return true;
   }
+
 }

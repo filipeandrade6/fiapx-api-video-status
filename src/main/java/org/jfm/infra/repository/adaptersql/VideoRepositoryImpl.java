@@ -14,7 +14,6 @@ import org.jfm.infra.repository.adaptersql.mapper.VideoMapper;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceException;
 import jakarta.persistence.Query;
@@ -50,7 +49,7 @@ public class VideoRepositoryImpl implements VideoRepository {
 
       return mapper.toDomain(query.getSingleResult());
     } catch(NoResultException e) {
-      throw new EntityNotFoundException(ErrosSistemaEnum.ITEM_NOT_FOUND.getMessage());
+      return null;
     } catch (PersistenceException e) {
         throw new ErrorSqlException(ErrosSistemaEnum.DATABASE_ERROR.getMessage());
     }
@@ -58,17 +57,33 @@ public class VideoRepositoryImpl implements VideoRepository {
 
   @Override
   @Transactional
-  public List<Video> buscarPorUsuario(UUID id) {
+  public List<Video> buscarPorEmail(String email) {
     try {
-      TypedQuery<VideoEntity> query = entityManager.createNamedQuery("Video.findByUsuario", VideoEntity.class);
-      query.setParameter("idUsuario", id);
+      TypedQuery<VideoEntity> query = entityManager.createNamedQuery("Video.findByEmail", VideoEntity.class);
+      query.setParameter("email", email);
 
       return query.getResultStream()
         .map(i -> mapper.toDomain(i)).collect(Collectors.toList());
     } catch (PersistenceException e) {
       throw new ErrorSqlException(ErrosSistemaEnum.DATABASE_ERROR.getMessage());
     }
-    // TODO: vai validar se o cliente existe?
+  }
+
+  @Override
+  @Transactional
+  public void editar(Video video) {
+    try {
+      Query query = entityManager.createNamedQuery("Video.update");
+      query.setParameter("id", video.getId());
+      query.setParameter("status", video.getStatus());
+      query.setParameter("dataCriacao", video.getDataCriacao());
+      query.setParameter("dataAtualizacao", video.getDataAtualizacao());
+      query.setParameter("email", video.getEmail());
+
+      query.executeUpdate();
+    } catch (PersistenceException e) {
+      throw new ErrorSqlException(ErrosSistemaEnum.DATABASE_ERROR.getMessage());
+    }
   }
 
   @Override

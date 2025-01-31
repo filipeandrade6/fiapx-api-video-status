@@ -66,12 +66,12 @@ public class VideoResource {
     })
   })
   @GET
-  @Path("/usuario/{idUsuario}")
-  public Response buscarPorIdUsuario(
-    @PathParam("idUsuario") @Parameter(description = "ID do usuário", example = "TODO")
-    UUID idUsuario) {
+  @Path("/email/{email}")
+  public Response buscarEmail(
+    @PathParam("email") @Parameter(description = "Email do video cadastrado", example = "exemplo@exemplo.com")
+    String email) {
     
-    List<Video> videos = useCase.buscarPorIdUsuario(idUsuario);
+    List<Video> videos = useCase.buscarPorEmail(email);
     return Response.status(Response.Status.OK).entity(videos).build();
   }
 
