@@ -1,25 +1,25 @@
 package org.jfm.domain.services;
 
-import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.jfm.domain.exceptions.ErrosSistemaEnum;
 import org.jfm.domain.exceptions.SqsException;
+import org.jfm.domain.usecases.VideoCannonSyncUseCase;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 import software.amazon.awssdk.services.sqs.SqsClient;
 import software.amazon.awssdk.services.sqs.model.SendMessageRequest;
 import software.amazon.awssdk.services.sqs.model.SendMessageResponse;
 
-@ApplicationScoped
-public class VideoCannonSyncService {
+public class VideoCannonSyncService implements VideoCannonSyncUseCase {
 
-  @Inject
   SqsClient sqs;
 
-  @Inject
-  @ConfigProperty(name = "queue.enviar.url")
   String queueUrl;
 
+  public VideoCannonSyncService(SqsClient sqs, String queueUrl) {
+    this.sqs = sqs;
+    this.queueUrl = queueUrl;
+  }
+
+  @Override
   public String enviarMensagem(String messageBody) {
     try {
       SendMessageRequest request = SendMessageRequest.builder()

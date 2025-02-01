@@ -34,7 +34,7 @@ public class VideoEntity {
   private Status status;
   private Date dataCriacao;
   private Date dataAtualizacao;
-  private UUID email;
+  private String email;
 
   public UUID getId() {
     return id;
@@ -68,19 +68,11 @@ public class VideoEntity {
     this.dataAtualizacao = dataAtualizacao;
   }
 
-  // public UUID getIdUsuario() {
-  //   return idUsuario;
-  // }
-
-  // public void setIdUsuario(UUID idUsuario) {
-  //   this.idUsuario = idUsuario;
-  // }
-
-	public UUID getEmail() {
+	public String getEmail() {
 		return email;
 	}
 
-	public void setEmail(UUID email) {
+	public void setEmail(String email) {
 		this.email = email;
 	} 
 

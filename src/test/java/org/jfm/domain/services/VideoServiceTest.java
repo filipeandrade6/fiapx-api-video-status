@@ -56,7 +56,7 @@ public class VideoServiceTest {
   }
 
   @Test
-  public void testBuscarPorIdUsuario() {
+  public void testBuscarPorEmail() {
     List<Video> videos = VideoFactory.montarLista();
 
     Assertions.assertEquals(service.buscarPorEmail("exemplo@exemplo.com"), videos);
