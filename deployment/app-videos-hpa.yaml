@@ -1,12 +1,12 @@
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: app-videdos-hpa
+  name: app-videos-hpa
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: app-videdos-deploy
+    name: app-videos-deploy
   minReplicas: 1
   maxReplicas: 3
   metrics:
