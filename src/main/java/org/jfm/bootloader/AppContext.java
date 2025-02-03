@@ -1,7 +1,6 @@
 package org.jfm.bootloader;
 
 import org.eclipse.microprofile.config.inject.ConfigProperty;
-import org.eclipse.microprofile.rest.client.inject.RestClient;
 import org.jfm.domain.ports.VideoRepository;
 import org.jfm.domain.services.VideoCannonSyncService;
 import org.jfm.domain.services.VideoShieldSyncService;
