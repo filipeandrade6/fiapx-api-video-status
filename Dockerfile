@@ -2,7 +2,7 @@ FROM maven:3-eclipse-temurin-21 AS build
 WORKDIR /code
 COPY src /code/src
 COPY pom.xml /code/pom.xml
-RUN mvn package
+RUN ./mvnw package
 
 FROM registry.access.redhat.com/ubi8/openjdk-21:1.18
 
