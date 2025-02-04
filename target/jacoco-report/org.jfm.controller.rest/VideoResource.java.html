@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>VideoResource.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">fiapx-api-video-status</a> &gt; <a href="index.source.html" class="el_package">org.jfm.controller.rest</a> &gt; <span class="el_source">VideoResource.java</span></div><h1>VideoResource.java</h1><pre class="source lang-java linenums">package org.jfm.controller.rest;
+
+import java.util.List;
+import java.util.UUID;
+
+import org.eclipse.microprofile.openapi.annotations.Operation;
+import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
+import org.eclipse.microprofile.openapi.annotations.media.Content;
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
+import org.eclipse.microprofile.openapi.annotations.parameters.Parameter;
+import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
+import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
+import org.eclipse.microprofile.openapi.annotations.tags.Tag;
+import org.jfm.domain.entities.Video;
+import org.jfm.domain.exceptions.ErrosSistemaEnum;
+import org.jfm.domain.exceptions.ParamException;
+import org.jfm.domain.usecases.VideoUseCase;
+
+import jakarta.inject.Inject;
+import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
+
+@Path(&quot;/videos&quot;)
+@Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
+@Tag(name = &quot;Video&quot;, description = &quot;Operações relacionada a videos&quot;)
+<span class="nc" id="L32">public class VideoResource {</span>
+
+  @Inject
+  VideoUseCase useCase;
+
+  @Operation(summary = &quot;Buscar video por ID&quot;, description = &quot;Busca o video por ID&quot;)
+  @APIResponses(value = {
+    @APIResponse(responseCode = &quot;200&quot;, description = &quot;Sucesso&quot;, content = {
+      @Content(mediaType = &quot;application/json&quot;, schema = @Schema(implementation = Video.class))
+    }),
+    @APIResponse(responseCode = &quot;404&quot;, description = &quot;Video não encontrado&quot;, content = {
+      @Content(mediaType = &quot;application/json&quot;, schema = @Schema(type = SchemaType.STRING, example = &quot;Video não encontrado&quot;))
+    })
+  })
+  @GET
+  @Path(&quot;/{id}&quot;)
+  public Response buscarPorId(
+    @PathParam(&quot;id&quot;) @Parameter(description = &quot;ID do video&quot;, example = &quot;TODO&quot;) 
+    UUID id) {
+<span class="nc bnc" id="L51" title="All 2 branches missed.">    if (id == null) {</span>
+<span class="nc" id="L52">      throw new ParamException(ErrosSistemaEnum.PARAM_INVALID.getMessage());</span>
+    }
+
+<span class="nc" id="L55">    Video video = useCase.buscarPorId(id);</span>
+<span class="nc" id="L56">    return Response.status(Response.Status.OK).entity(video).build();</span>
+  }
+
+  @Operation(summary = &quot;Buscar lista de videos por ID de usuário&quot;, description = &quot;Busca lista de videos por ID de usuário&quot;)
+  @APIResponses(value = {
+    @APIResponse(responseCode = &quot;200&quot;, description = &quot;Sucesso&quot;, content = {
+      @Content(mediaType = &quot;application/json&quot;, schema = @Schema(implementation = Video.class))
+    }),
+    @APIResponse(responseCode = &quot;404&quot;, description = &quot;Video não encontrado&quot;, content = {
+      @Content(mediaType = &quot;application/json&quot;, schema = @Schema(type = SchemaType.STRING, example = &quot;Video não encontrado&quot;))
+    })
+  })
+  @GET
+  @Path(&quot;/email/{email}&quot;)
+  public Response buscarEmail(
+    @PathParam(&quot;email&quot;) @Parameter(description = &quot;Email do video cadastrado&quot;, example = &quot;exemplo@exemplo.com&quot;)
+    String email) {
+    
+<span class="nc" id="L74">    List&lt;Video&gt; videos = useCase.buscarPorEmail(email);</span>
+<span class="nc" id="L75">    return Response.status(Response.Status.OK).entity(videos).build();</span>
+  }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
