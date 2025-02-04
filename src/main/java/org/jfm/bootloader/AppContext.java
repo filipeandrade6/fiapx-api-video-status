@@ -23,7 +23,7 @@ public class AppContext {
   @Produces
   public VideoShieldSyncService VideoShieldSyncService(
     SqsClient sqs,
-    @ConfigProperty(name = "queue.receber.url") String queueUrl,
+    @ConfigProperty(name = "SQS.AWS.RECEBER") String queueUrl,
     VideoUseCase videoUseCase,
     VideoCannonSyncUseCase videoCannonSyncUseCase) {
     return new VideoShieldSyncService(
@@ -37,7 +37,7 @@ public class AppContext {
   @Produces
   public VideoCannonSyncService VideoCannonSyncService(
     SqsClient sqs,
-    @ConfigProperty(name = "queue.enviar.url") String queueUrl
+    @ConfigProperty(name = "SQS.AWS.ENVIAR") String queueUrl
   ) {
     return new VideoCannonSyncService(
       sqs,
