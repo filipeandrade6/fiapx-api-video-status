@@ -15,6 +15,12 @@ import software.amazon.awssdk.services.sqs.SqsClient;
 @ApplicationScoped
 public class AppContext {
 
+  @ConfigProperty(name = "SQS.AWS.RECEBER")
+  String queueUrlReceber;
+
+  @ConfigProperty(name = "SQS.AWS.ENVIAR")
+  String queueUrlEnviar;
+
   @Produces
   public VideoService VideoService(VideoRepository videoRepository) {
     return new VideoService(videoRepository);
@@ -23,12 +29,11 @@ public class AppContext {
   @Produces
   public VideoShieldSyncService VideoShieldSyncService(
     SqsClient sqs,
-    @ConfigProperty(name = "SQS.AWS.RECEBER") String queueUrl,
     VideoUseCase videoUseCase,
     VideoCannonSyncUseCase videoCannonSyncUseCase) {
     return new VideoShieldSyncService(
       sqs,
-      queueUrl,
+      queueUrlReceber,
       videoUseCase, 
       videoCannonSyncUseCase
     );
@@ -36,12 +41,11 @@ public class AppContext {
 
   @Produces
   public VideoCannonSyncService VideoCannonSyncService(
-    SqsClient sqs,
-    @ConfigProperty(name = "SQS.AWS.ENVIAR") String queueUrl
+    SqsClient sqs
   ) {
     return new VideoCannonSyncService(
       sqs,
-      queueUrl
+      queueUrlEnviar
     );
   }
 

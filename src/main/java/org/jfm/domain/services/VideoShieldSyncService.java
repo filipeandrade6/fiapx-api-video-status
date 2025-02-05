@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.Executors;
 
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.jfm.domain.entities.Video;
 import org.jfm.domain.entities.enums.Status;
 import org.jfm.domain.exceptions.ErrosSistemaEnum;
@@ -22,6 +23,7 @@ import software.amazon.awssdk.services.sqs.model.ReceiveMessageRequest;
 public class VideoShieldSyncService implements VideoShieldSyncUseCase {
   SqsClient sqs;
 
+  // @ConfigProperty(name = "SQS.AWS.RECEBER")
   String queueUrl;
 
   VideoUseCase videoUseCase;
@@ -36,7 +38,7 @@ public class VideoShieldSyncService implements VideoShieldSyncUseCase {
     String queueUrl,
     VideoUseCase videoUseCase, 
     VideoCannonSyncUseCase videoCannonSyncUseCase
-    ) {
+  ) {
     this.videoUseCase = videoUseCase;
     this.videoCannonSyncUseCase = videoCannonSyncUseCase;
     this.sqs = sqs;
@@ -45,11 +47,13 @@ public class VideoShieldSyncService implements VideoShieldSyncUseCase {
 
   @PostConstruct
   public void startListening() {
+    System.out.println("Start Listening");
     Executors.newSingleThreadExecutor().submit(this::receberMensagens);
   }
 
   @Override
   public void receberMensagens() {
+    System.out.println("receberMensagens");
     while (true) {
       try {
         List<Message> mensagens = sqs.receiveMessage(ReceiveMessageRequest.builder()
