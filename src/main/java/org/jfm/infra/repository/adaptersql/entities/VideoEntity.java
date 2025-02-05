@@ -37,8 +37,10 @@ public class VideoEntity {
   @Id
   private UUID id;
   private Status status;
+
   @Column(name = "data_criacao")
   private Instant dataCriacao;
+  
   @Column(name = "data_atualizacao")
   private Instant dataAtualizacao;
   private String email;
