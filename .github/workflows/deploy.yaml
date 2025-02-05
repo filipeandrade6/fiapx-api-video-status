@@ -99,8 +99,8 @@ jobs:
           IMAGE_TAG: ${{ steps.commit.outputs.short }}
           DB_HOST_ADDRESS: ${{ env.DB_HOST_ADDRESS }}
         run: |
-          sed -i.bak "s|DOCKER_IMAGE|$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG|g" deployment/app-pedidos-deploy.yaml && \
-          sed -i.bak "s|DB_HOST_ADDRESS|$DB_HOST_ADDRESS|g" deployment/app-pedidos-cm.yaml
+          sed -i.bak "s|DOCKER_IMAGE|$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG|g" deployment/app-videos-deploy.yaml && \
+          sed -i.bak "s|DB_HOST_ADDRESS|$DB_HOST_ADDRESS|g" deployment/app-videos-cm.yaml
 
       - name: Deploy to EKS
         run: |
