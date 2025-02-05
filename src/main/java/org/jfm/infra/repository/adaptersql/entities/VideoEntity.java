@@ -1,5 +1,6 @@
 package org.jfm.infra.repository.adaptersql.entities;
 
+import java.time.Instant;
 import java.util.Date;
 import java.util.UUID;
 
@@ -37,9 +38,9 @@ public class VideoEntity {
   private UUID id;
   private Status status;
   @Column(name = "data_criacao")
-  private Date dataCriacao;
+  private Instant dataCriacao;
   @Column(name = "data_atualizacao")
-  private Date dataAtualizacao;
+  private Instant dataAtualizacao;
   private String email;
 
   public UUID getId() {
