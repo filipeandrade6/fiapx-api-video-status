@@ -90,8 +90,8 @@ public class VideoRepositoryImpl implements VideoRepository {
       Query query = entityManager.createNamedQuery("Video.update");
       query.setParameter("id", video.getId());
       query.setParameter("status", video.getStatus());
-      query.setParameter("data_criacao", video.getDataCriacao());
-      query.setParameter("data_atualizacao", video.getDataAtualizacao());
+      query.setParameter("dataCriacao", video.getDataCriacao());
+      query.setParameter("dataAtualizacao", video.getDataAtualizacao());
       query.setParameter("email", video.getEmail());
 
       query.executeUpdate();

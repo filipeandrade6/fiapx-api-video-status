@@ -27,7 +27,7 @@ import jakarta.persistence.Table;
     query = "SELECT v FROM VideoEntity v WHERE v.email = :email"),
   @NamedQuery(
     name = "Video.update", 
-    query = "UPDATE VideoEntity v SET v.status = :status, v.data_atualizacao = :dataAtualizacao WHERE v.id = :id"),
+    query = "UPDATE VideoEntity v SET v.status = :status, v.dataAtualizacao = :dataAtualizacao WHERE v.id = :id"),
   @NamedQuery(
     name = "Video.delete", 
     query = "DELETE FROM VideoEntity v WHERE v.id = :id")
@@ -40,7 +40,7 @@ public class VideoEntity {
 
   @Column(name = "data_criacao")
   private Instant dataCriacao;
-  
+
   @Column(name = "data_atualizacao")
   private Instant dataAtualizacao;
   private String email;
