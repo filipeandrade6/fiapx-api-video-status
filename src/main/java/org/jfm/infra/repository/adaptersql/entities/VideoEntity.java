@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import org.jfm.domain.entities.enums.Status;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.NamedQueries;
@@ -35,7 +36,9 @@ public class VideoEntity {
   @Id
   private UUID id;
   private Status status;
+  @Column(name = "data_criacao")
   private Date dataCriacao;
+  @Column(name = "data_atualizacao")
   private Date dataAtualizacao;
   private String email;
 
