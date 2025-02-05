@@ -59,19 +59,19 @@ public class VideoEntity {
     this.status = status;
   }
 
-  public Date getDataCriacao() {
+  public Instant getDataCriacao() {
     return dataCriacao;
   }
 
-  public void setDataCriacao(Date dataCriacao) {
+  public void setDataCriacao(Instant dataCriacao) {
     this.dataCriacao = dataCriacao;
   }
 
-  public Date getDataAtualizacao() {
+  public Instant getDataAtualizacao() {
     return dataAtualizacao;
   }
 
-  public void setDataAtualizacao(Date dataAtualizacao) {
+  public void setDataAtualizacao(Instant dataAtualizacao) {
     this.dataAtualizacao = dataAtualizacao;
   }
 
