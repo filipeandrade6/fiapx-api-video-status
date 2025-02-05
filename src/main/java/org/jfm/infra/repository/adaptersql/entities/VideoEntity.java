@@ -19,7 +19,7 @@ import jakarta.persistence.Table;
     query = "SELECT v FROM VideoEntity v WHERE v.id = :id"),
   @NamedQuery(
     name = "Video.findAll", 
-    query = "SELECT v FROM VideoEntity"),
+    query = "SELECT v FROM VideoEntity v"),
   @NamedQuery(
     name = "Video.findByEmail", 
     query = "SELECT v FROM VideoEntity v WHERE v.email = :email"),
