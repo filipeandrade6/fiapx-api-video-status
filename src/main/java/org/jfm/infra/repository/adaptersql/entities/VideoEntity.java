@@ -1,7 +1,6 @@
 package org.jfm.infra.repository.adaptersql.entities;
 
 import java.time.Instant;
-import java.util.Date;
 import java.util.UUID;
 
 import org.jfm.domain.entities.enums.Status;
