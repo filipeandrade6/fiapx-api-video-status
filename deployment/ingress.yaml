@@ -21,10 +21,10 @@ spec:
             name: app-videos-svc
             port:
               number: 8080
-      - path: /sync
-        pathType: Prefix
-        backend:
-          service:
-            name: app-videos-svc
-            port:
-              number: 8080
+      # - path: /sync
+      #   pathType: Prefix
+      #   backend:
+      #     service:
+      #       name: app-videos-svc
+      #       port:
+      #         number: 8080
