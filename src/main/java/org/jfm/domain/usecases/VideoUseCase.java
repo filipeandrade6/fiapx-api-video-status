@@ -9,6 +9,7 @@ public interface VideoUseCase {
   public UUID criar(Video video);
   public Video buscarPorId(UUID id);
   public List<Video> buscarPorEmail(String email);
+  public List<Video> buscar();
   public void editar(Video video);
   public void remover(UUID id);
 }

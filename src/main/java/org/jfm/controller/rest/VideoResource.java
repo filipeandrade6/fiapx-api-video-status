@@ -66,13 +66,18 @@ public class VideoResource {
     })
   })
   @GET
-  @Path("/email/{email}")
-  public Response buscarEmail(
-    @PathParam("email") @Parameter(description = "Email do video cadastrado", example = "exemplo@exemplo.com")
-    String email) {
-    
-    List<Video> videos = useCase.buscarPorEmail(email);
+  public Response buscar() {
+    List<Video> videos = useCase.buscar();
     return Response.status(Response.Status.OK).entity(videos).build();
   }
+  // @GET
+  // @Path("/email/{email}")
+  // public Response buscarEmail(
+  //   @PathParam("email") @Parameter(description = "Email do video cadastrado", example = "exemplo@exemplo.com")
+  //   String email) {
+    
+  //   List<Video> videos = useCase.buscarPorEmail(email);
+  //   return Response.status(Response.Status.OK).entity(videos).build();
+  // }
 
 }

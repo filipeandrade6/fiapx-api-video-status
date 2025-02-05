@@ -28,6 +28,11 @@ public class VideoService implements VideoUseCase {
   }
 
   @Override
+  public List<Video> buscar() {
+    return repository.buscar();
+  }
+
+  @Override
   public List<Video> buscarPorEmail(String email) {
     return repository.buscarPorEmail(email);
   }

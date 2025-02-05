@@ -57,6 +57,20 @@ public class VideoRepositoryImpl implements VideoRepository {
 
   @Override
   @Transactional
+  public List<Video> buscar() {
+    try {
+      TypedQuery<VideoEntity> query = entityManager.createNamedQuery("Video.findAll", VideoEntity.class);
+
+      return query.getResultStream().map(i -> mapper.toDomain(i)).collect(Collectors.toList());
+    } catch(NoResultException e) {
+      return null;
+    } catch (PersistenceException e) {
+        throw new ErrorSqlException(ErrosSistemaEnum.DATABASE_ERROR.getMessage());
+    }
+  }
+
+  @Override
+  @Transactional
   public List<Video> buscarPorEmail(String email) {
     try {
       TypedQuery<VideoEntity> query = entityManager.createNamedQuery("Video.findByEmail", VideoEntity.class);
