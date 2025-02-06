@@ -30,7 +30,7 @@ public class VideoShieldSyncService implements VideoShieldSyncUseCase {
 
   VideoCannonSyncUseCase videoCannonSyncUseCase;
 
-  private static int NUMERO_MAXIMO_MENSAGENS = 20;
+  private static int NUMERO_MAXIMO_MENSAGENS = 10;
   private static int DURACAO_POLLING = 20;
 
   public VideoShieldSyncService(
