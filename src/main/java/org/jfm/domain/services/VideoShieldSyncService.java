@@ -97,7 +97,8 @@ public class VideoShieldSyncService implements VideoShieldSyncUseCase {
 
       videoUseCase.editar(videoBuscado);
     }
- 
+    
+    // TODO: situação em que primeira chamada do id (deveria ser SOLICITADO) falha
     if (videoStatus == Status.FALHA) {
       // // exemplo 3: "uuid.falha.descricaoDaFalha"
       // String mensagemEnviada = String.join(".", videoId.toString(), videoBuscado.getEmail(), desmembrarMensagem(mensagem)[2]);
