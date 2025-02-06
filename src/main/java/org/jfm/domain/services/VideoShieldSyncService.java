@@ -83,11 +83,13 @@ public class VideoShieldSyncService implements VideoShieldSyncUseCase {
     Video videoBuscado = videoUseCase.buscarPorId(videoId);
 
     if (videoBuscado == null && videoStatus == Status.SOLICITADO) {
+      System.out.println("video nao encontrado, mensagemId: " + mensagem.messageId());
       // // exemplo 1: "uuid.estado.email";
       Video video = new Video(videoId, videoStatus, desmembrarMensagem(mensagem)[2]);
       videoUseCase.criar(video);
       return;
     } else if (videoBuscado != null && videoStatus != Status.SOLICITADO) {
+      System.out.println("video encontrado, mensagemId: " + mensagem.messageId());
       // // exemplo 2: "uuid.estado"
       // // exemplo 3: "uuid.falha.descricaoDaFalha"
       videoBuscado.setStatus(videoStatus);
