@@ -1,6 +1,5 @@
 package org.jfm.domain.services;
 
-import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.jfm.domain.exceptions.ErrosSistemaEnum;
 import org.jfm.domain.exceptions.SqsException;
 import org.jfm.domain.usecases.VideoCannonSyncUseCase;

@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.Executors;
 
-import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.jfm.domain.entities.Video;
 import org.jfm.domain.entities.enums.Status;
 import org.jfm.domain.exceptions.ErrosSistemaEnum;
@@ -45,33 +44,32 @@ public class VideoShieldSyncService implements VideoShieldSyncUseCase {
     this.queueUrl = queueUrl;
   }
 
-  @PostConstruct
-  public void startListening() {
-    System.out.println("Start Listening");
-    Executors.newSingleThreadExecutor().submit(this::receberMensagens);
-  }
+  // @PostConstruct
+  // public void startListening() {
+  //   System.out.println("Start Listening");
+  //   Executors.newSingleThreadExecutor().submit(this::receberMensagens);
+  // }
 
   @Override
   public void receberMensagens() {
     System.out.println("receberMensagens");
     // while (true) {
-      try {
-        List<Message> mensagens = sqs.receiveMessage(ReceiveMessageRequest.builder()
-          .queueUrl(queueUrl)
-          .maxNumberOfMessages(NUMERO_MAXIMO_MENSAGENS)
-          // .waitTimeSeconds(DURACAO_POLLING)
-          .build()).messages();
+    try {
+      List<Message> mensagens = sqs.receiveMessage(ReceiveMessageRequest.builder()
+        .queueUrl(queueUrl)
+        .maxNumberOfMessages(NUMERO_MAXIMO_MENSAGENS)
+        // .waitTimeSeconds(DURACAO_POLLING)
+        .build()).messages();
 
-        for (Message mensagem : mensagens) {
-          processarMensagem(mensagem);
-          deletarMensagem(mensagem);
-        }
-      } catch (Exception e) {
-        e.printStackTrace();
-        System.out.println(e.getMessage());
-        throw new SqsException(ErrosSistemaEnum.FALHA_COMUNICACAO.getMessage());
+      for (Message mensagem : mensagens) {
+        processarMensagem(mensagem);
+        deletarMensagem(mensagem);
       }
-    // }
+    } catch (Exception e) {
+      e.printStackTrace();
+      System.out.println(e.getMessage());
+      throw new SqsException(ErrosSistemaEnum.FALHA_COMUNICACAO.getMessage());
+    }
   }
 
   private void processarMensagem(Message mensagem) {
