@@ -100,7 +100,8 @@ public class VideoShieldSyncService implements VideoShieldSyncUseCase {
  
     if (videoStatus == Status.FALHA) {
       // // exemplo 3: "uuid.falha.descricaoDaFalha"
-      String mensagemEnviada = String.join(".", videoId.toString(), videoBuscado.getEmail(), desmembrarMensagem(mensagem)[2]);
+      // String mensagemEnviada = String.join(".", videoId.toString(), videoBuscado.getEmail(), desmembrarMensagem(mensagem)[2]);
+      String mensagemEnviada = String.join(".", videoId.toString(), videoBuscado.getEmail());
       String mensagemId = videoCannonSyncUseCase.enviarMensagem(mensagemEnviada);
 
       // TODO: como saber se mensagem nao foi enviada?
