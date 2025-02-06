@@ -54,12 +54,12 @@ public class VideoShieldSyncService implements VideoShieldSyncUseCase {
   @Override
   public void receberMensagens() {
     System.out.println("receberMensagens");
-    while (true) {
+    // while (true) {
       try {
         List<Message> mensagens = sqs.receiveMessage(ReceiveMessageRequest.builder()
           .queueUrl(queueUrl)
           .maxNumberOfMessages(NUMERO_MAXIMO_MENSAGENS)
-          .waitTimeSeconds(DURACAO_POLLING)
+          // .waitTimeSeconds(DURACAO_POLLING)
           .build()).messages();
 
         for (Message mensagem : mensagens) {
@@ -71,7 +71,7 @@ public class VideoShieldSyncService implements VideoShieldSyncUseCase {
         System.out.println(e.getMessage());
         throw new SqsException(ErrosSistemaEnum.FALHA_COMUNICACAO.getMessage());
       }
-    }
+    // }
   }
 
   private void processarMensagem(Message mensagem) {
