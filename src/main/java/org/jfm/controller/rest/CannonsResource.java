@@ -9,34 +9,24 @@ import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
-@Path("/mensagens")
-public class MensagensSyncResource {
+@Path("/cannons")
+@Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
+public class CannonsResource {
   
   @Inject
   VideoCannonSyncService cannonService;
 
-  @Inject
-  VideoShieldSyncService shieldService;
-
   @POST
-  @Path("/cannon")
-  @Consumes(MediaType.APPLICATION_JSON)
   public Response enviarMensagem(Video video) throws Exception {
     // para teste
     String mensagemEnviada = String.join(".", video.getId().toString(), video.getEmail());
     String mensagemId = cannonService.enviarMensagem(mensagemEnviada);
     return Response.ok().entity(mensagemId).build();
-  }
-
-  @GET
-  @Path("/shield")
-  public Response receber() {
-    // para teste
-    shieldService.receberMensagens();
-    return Response.ok().build();
   }
 
 }
