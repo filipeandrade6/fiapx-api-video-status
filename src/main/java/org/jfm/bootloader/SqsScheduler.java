@@ -12,7 +12,7 @@ public class SqsScheduler {
   @Inject
   VideoShieldSyncService service;
 
-  @Scheduled(every = "10s") 
+  @Scheduled(every = "30s") 
   void pollSqsQueue() {
     service.receberMensagens();
   }

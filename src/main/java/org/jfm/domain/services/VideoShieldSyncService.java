@@ -52,7 +52,7 @@ public class VideoShieldSyncService implements VideoShieldSyncUseCase {
 
   @Override
   public void receberMensagens() {
-    System.out.println("receberMensagens");
+    System.out.println("receberMensagens 1");
     // while (true) {
     try {
       List<Message> mensagens = sqs.receiveMessage(ReceiveMessageRequest.builder()
@@ -60,6 +60,8 @@ public class VideoShieldSyncService implements VideoShieldSyncUseCase {
         .maxNumberOfMessages(NUMERO_MAXIMO_MENSAGENS)
         // .waitTimeSeconds(DURACAO_POLLING)
         .build()).messages();
+
+        System.out.println("receberMensagens 2");
 
       for (Message mensagem : mensagens) {
         processarMensagem(mensagem);
@@ -119,13 +121,16 @@ public class VideoShieldSyncService implements VideoShieldSyncUseCase {
 
   private String[] desmembrarMensagem(Message mensagem) {
     return mensagem.body().split("\\.", 3);
+    // return mensagem.body().split("\\.");
   }
 
   private UUID mensagemVideoId(Message mensagem) {
+    System.out.println("mensagemVideoId");
     return UUID.fromString(desmembrarMensagem(mensagem)[0]);
   }
 
   private Status mensagemVideoStatus(Message mensagem) {
+    System.out.println("mensagemVideoStatus");
     return Status.fromString(desmembrarMensagem(mensagem)[1]);
   }
 
