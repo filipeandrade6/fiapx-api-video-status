@@ -118,7 +118,7 @@ public class VideoShieldSyncService implements VideoShieldSyncUseCase {
   }
 
   private String[] desmembrarMensagem(Message mensagem) {
-    return mensagem.body().split("\\.");
+    return mensagem.body().split("\\.", 3);
   }
 
   private UUID mensagemVideoId(Message mensagem) {
