@@ -17,7 +17,7 @@ public enum Status {
       }
     }
 
-    // throw new ParamException(ErrosSistemaEnum.PARAM_INVALID.getMessage());
+    throw new ParamException(ErrosSistemaEnum.PARAM_INVALID.getMessage());
   }
 
   public static boolean statusEhSolicitado(String statusString) {
