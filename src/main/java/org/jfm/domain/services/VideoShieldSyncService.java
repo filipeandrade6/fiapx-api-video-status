@@ -64,6 +64,7 @@ public class VideoShieldSyncService implements VideoShieldSyncUseCase {
         System.out.println("receberMensagens 2");
 
       for (Message mensagem : mensagens) {
+        System.out.println("receberMensagens loop - " + mensagem.messageId());
         processarMensagem(mensagem);
         deletarMensagem(mensagem);
       }
@@ -107,7 +108,7 @@ public class VideoShieldSyncService implements VideoShieldSyncUseCase {
 
       // TODO: como saber se mensagem nao foi enviada?
       if (mensagemId == null || mensagemId.isBlank()) {
-        throw new SqsException(ErrosSistemaEnum.FALHA_COMUNICACAO.getMessage());
+        // throw new SqsException(ErrosSistemaEnum.FALHA_COMUNICACAO.getMessage());
       }
     }
   }
@@ -121,7 +122,6 @@ public class VideoShieldSyncService implements VideoShieldSyncUseCase {
 
   private String[] desmembrarMensagem(Message mensagem) {
     return mensagem.body().split("\\.", 3);
-    // return mensagem.body().split("\\.");
   }
 
   private UUID mensagemVideoId(Message mensagem) {
