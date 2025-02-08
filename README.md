@@ -83,3 +83,5 @@ Easily start your REST Web Services
 Monitor your application's health using SmallRye Health
 
 [Related guide section...](https://quarkus.io/guides/smallrye-health)
+
+.
