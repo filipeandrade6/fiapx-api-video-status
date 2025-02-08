@@ -44,6 +44,9 @@ jobs:
             ${{ runner.os }}-maven-
 
       - name: Build with Maven
+        env: 
+          SQS_AWS_RECEBER: ${{ secrets.SQS_AWS_RECEBER }}
+          SQS_AWS_ENVIAR: ${{ secrets.SQS_AWS_ENVIAR }}
         run: ./mvnw clean verify
 
       # - name: SonarQube Cloud Scan
