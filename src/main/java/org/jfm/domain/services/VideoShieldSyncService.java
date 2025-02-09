@@ -22,7 +22,6 @@ import software.amazon.awssdk.services.sqs.model.ReceiveMessageRequest;
 public class VideoShieldSyncService implements VideoShieldSyncUseCase {
   SqsClient sqs;
 
-  // @ConfigProperty(name = "SQS.AWS.RECEBER")
   String queueUrl;
 
   VideoUseCase videoUseCase;
@@ -44,16 +43,9 @@ public class VideoShieldSyncService implements VideoShieldSyncUseCase {
     this.queueUrl = queueUrl;
   }
 
-  // @PostConstruct
-  // public void startListening() {
-  //   System.out.println("Start Listening");
-  //   Executors.newSingleThreadExecutor().submit(this::receberMensagens);
-  // }
-
   @Override
   public void receberMensagens() {
     System.out.println("receberMensagens 1");
-    // while (true) {
     try {
       List<Message> mensagens = sqs.receiveMessage(ReceiveMessageRequest.builder()
         .queueUrl(queueUrl)
@@ -99,16 +91,14 @@ public class VideoShieldSyncService implements VideoShieldSyncUseCase {
       videoUseCase.editar(videoBuscado);
     }
     
-    // TODO: situação em que primeira chamada do id (deveria ser SOLICITADO) falha
     if (videoStatus == Status.FALHA) {
       // // exemplo 3: "uuid.falha.descricaoDaFalha"
-      // String mensagemEnviada = String.join(".", videoId.toString(), videoBuscado.getEmail(), desmembrarMensagem(mensagem)[2]);
       String mensagemEnviada = String.join(".", videoId.toString(), videoBuscado.getEmail());
       String mensagemId = videoCannonSyncUseCase.enviarMensagem(mensagemEnviada);
 
       // TODO: como saber se mensagem nao foi enviada?
       if (mensagemId == null || mensagemId.isBlank()) {
-        // throw new SqsException(ErrosSistemaEnum.FALHA_COMUNICACAO.getMessage());
+        throw new SqsException(ErrosSistemaEnum.FALHA_COMUNICACAO.getMessage());
       }
     }
   }
