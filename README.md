@@ -113,6 +113,7 @@ Runs every 30s (SqsScheduler)
 
 ## Contributing
 
+<<<<<<< HEAD
 1. Fork the repository
 2. Create a branch: `git checkout -b feat/new-feature`
 3. Commit changes with tests: `git commit -m 'feat: Add video validation'`
@@ -128,3 +129,8 @@ MIT License - See LICENSE
 Developed as part of the Software Engineering Architecture specialization at FIAP.
 
 This structure emphasizes the hexagonal architecture while showcasing the video processing workflow. Adjust queue URLs and database credentials as needed for your environment.
+=======
+[Related guide section...](https://quarkus.io/guides/smallrye-health)
+
+.
+>>>>>>> d8e81fefa13f814349e888a58f8d260d518d5419
