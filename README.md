@@ -1,6 +1,6 @@
 # fiapx-api-video-status
 
-<!-- trigger gh action -->
+<!-- trigger gh action 2 -->
 
 This project uses Quarkus, the Supersonic Subatomic Java Framework.
 
