@@ -1,89 +1,130 @@
-# fiapx-api-video-status
+# Video Status API
 
-<!-- trigger gh action -->
+A Quarkus-based system for processing video status updates via AWS SQS, syncing with a database, and exposing REST APIs. Built with Hexagonal Architecture for modularity and testability.
 
-This project uses Quarkus, the Supersonic Subatomic Java Framework.
+## Features
 
-If you want to learn more about Quarkus, please visit its website: <https://quarkus.io/>.
+- SQS Integration: Asynchronous processing of video status updates via AWS SQS queues
+- Status Workflow: Track video states (SOLICITADO, CARREGADO, PROCESSANDO, CONCLUIDO, FALHA)
+- REST API: CRUD operations for videos and manual triggers for SQS processing
+- Scheduled Polling: Automatic SQS message consumption every 30 seconds
+- Database Sync: PostgreSQL integration for video state persistence
+- Error Handling: Custom exceptions with HTTP status mapping
 
-## Running the application in dev mode
+## Project Structure
 
-You can run your application in dev mode that enables live coding using:
+### Source Code
 
-```shell script
-./mvnw quarkus:dev
+```plaintext
+src/main/java/org/jfm/
+├── bootloader/           # CDI configuration (SQS client, services)
+├── controller/           # REST endpoints + exception mapping
+├── domain/               # Core business logic
+│   ├── entities/         # Video model, Status enum
+│   ├── exceptions/       # Custom exceptions
+│   ├── ports/            # Repository interfaces
+│   ├── usecases/         # Usecases implementations   
+│   └── services/         # Business services
+└── infrastructure/       # External implementations
+    └── repository/       # SQL database adapter
 ```
 
-> **_NOTE:_**  Quarkus now ships with a Dev UI, which is available in dev mode only at <http://localhost:8080/q/dev/>.
+## Dependencies
 
-## Packaging and running the application
+- Framework: Quarkus
+- AWS: SDK for SQS
+- Database: Hibernate ORM + PostgreSQL
+- Testing: JUnit 5, Mockito
+- Utilities: MapStruct (DTO mapping)
 
-The application can be packaged using:
+## Configuration
 
-```shell script
-./mvnw package
+Edit `src/main/resources/application.properties`:
+
+```properties
+# AWS SQS  
+SQS.AWS.RECEBER=https://sqs.us-east-1.amazonaws.com/your-queue/receber  
+SQS.AWS.ENVIAR=https://sqs.us-east-1.amazonaws.com/your-queue/enviar  
+aws.region=us-east-1  
+
+# Database  
+quarkus.datasource.db-kind=postgresql  
+quarkus.datasource.username=postgres  
+quarkus.datasource.password=secret  
+quarkus.datasource.jdbc.url=jdbc:postgresql://localhost:5432/videos  
+quarkus.hibernate-orm.database.generation=update  
 ```
 
-It produces the `quarkus-run.jar` file in the `target/quarkus-app/` directory.
-Be aware that it’s not an _über-jar_ as the dependencies are copied into the `target/quarkus-app/lib/` directory.
+## Build & Run
 
-The application is now runnable using `java -jar target/quarkus-app/quarkus-run.jar`.
+### Development Mode
 
-If you want to build an _über-jar_, execute the following command:
-
-```shell script
-./mvnw package -Dquarkus.package.jar.type=uber-jar
+```sh
+./mvnw quarkus:dev  
 ```
 
-The application, packaged as an _über-jar_, is now runnable using `java -jar target/*-runner.jar`.
+### Package as JAR
 
-## Creating a native executable
-
-You can create a native executable using:
-
-```shell script
-./mvnw package -Dnative
+```sh
+./mvnw package  
+# Run: java -jar target/quarkus-app/quarkus-run.jar  
 ```
 
-Or, if you don't have GraalVM installed, you can run the native executable build in a container using:
+### Native Build
 
-```shell script
-./mvnw package -Dnative -Dquarkus.native.container-build=true
+```sh
+./mvnw package -Dnative  
+# Run: ./target/video-shield-1.0.0-SNAPSHOT-runner  
 ```
 
-You can then execute your native executable with: `./target/fiapx-api-video-status-1.0.0-SNAPSHOT-runner`
+## Testing
+- Unity and BDD tests.
 
-If you want to learn more about building native executables, please consult <https://quarkus.io/guides/maven-tooling>.
+### Run Unit Tests
 
-## Related Guides
+```sh
+./mvnw test  
+```
 
-- REST ([guide](https://quarkus.io/guides/rest)): A Jakarta REST implementation utilizing build time processing and Vert.x. This extension is not compatible with the quarkus-resteasy extension, or any of the extensions that depend on it.
-- JDBC Driver - H2 ([guide](https://quarkus.io/guides/datasource)): Connect to the H2 database via JDBC
-- REST Client ([guide](https://quarkus.io/guides/rest-client)): Call REST services
-- SmallRye OpenAPI ([guide](https://quarkus.io/guides/openapi-swaggerui)): Document your REST APIs with OpenAPI - comes with Swagger UI
-- REST Jackson ([guide](https://quarkus.io/guides/rest#json-serialisation)): Jackson serialization support for Quarkus REST. This extension is not compatible with the quarkus-resteasy extension, or any of the extensions that depend on it
-- Jacoco - Code Coverage ([guide](https://quarkus.io/guides/tests-with-coverage)): Jacoco test coverage support
-- SmallRye Health ([guide](https://quarkus.io/guides/smallrye-health)): Monitor service health
-- JDBC Driver - PostgreSQL ([guide](https://quarkus.io/guides/datasource)): Connect to the PostgreSQL database via JDBC
+## API Endpoints
 
-## Provided Code
+| Endpoint          | Method | Description                       |
+|-------------------|--------|-----------------------------------|
+| /videos           | GET    | List all videos                   |
+| /videos/{id}      | GET    | Get video by ID                   |
+| /videos/email/{email} | GET | Get videos by email               |
 
-### REST Client
+## Flow
 
-Invoke different services through REST with JSON
+### Scheduler
 
-[Related guide section...](https://quarkus.io/guides/rest-client)
+Runs every 30s (SqsScheduler)
 
-### REST
+### SQS Consumption
 
-Easily start your REST Web Services
+- Receives messages from `SQS.AWS.RECEBER` queue
+- Parses message format: `UUID.STATUS[.optional_data]`
 
-[Related guide section...](https://quarkus.io/guides/getting-started-reactive#reactive-jax-rs-resources)
+### State Management
 
-### SmallRye Health
+- Creates/updates Video entities in database
+- On failure status: sends notifications via `SQS.AWS.ENVIAR`
+- Message Cleanup: Deletes processed SQS messages
 
-Monitor your application's health using SmallRye Health
+## Contributing
 
-[Related guide section...](https://quarkus.io/guides/smallrye-health)
+1. Fork the repository
+2. Create a branch: `git checkout -b feat/new-feature`
+3. Commit changes with tests: `git commit -m 'feat: Add video validation'`
+4. Push: `git push origin feat/new-feature`
+5. Open a pull request
 
-.
+## License
+
+MIT License - See LICENSE
+
+## FIAP - Software Architecture Postgraduate Project
+
+Developed as part of the Software Engineering Architecture specialization at FIAP.
+
+This structure emphasizes the hexagonal architecture while showcasing the video processing workflow. Adjust queue URLs and database credentials as needed for your environment.
